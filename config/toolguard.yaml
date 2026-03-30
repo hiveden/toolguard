@@ -1,0 +1,33 @@
+# ToolGuard default configuration
+# See README.md for full documentation.
+
+server:
+  host: "0.0.0.0"
+  port: 8400
+  log_level: "info"
+
+# Which scanners are active for each scan type (ordered).
+scanners:
+  input:
+    - prompt_injection
+  output:
+    - output_validation
+  tool_call:
+    - mcp_param_check
+
+# Per-scanner configuration overrides.
+scanner_configs:
+  prompt_injection:
+    enabled: true
+    config:
+      # keywords: []  # Uncomment to override default keyword list.
+
+  output_validation:
+    enabled: true
+    config:
+      max_output_length: 50000
+
+  mcp_param_check:
+    enabled: true
+    config:
+      max_payload_bytes: 102400  # 100 KB

@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  toolguard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hiveden/toolguard:latest
+    container_name: toolguard
+    ports:
+      - "8400:8400"
+    volumes:
+      - ./config:/app/config:ro
+    environment:
+      - TOOLGUARD_CONFIG_PATH=/app/config/toolguard.yaml
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8400/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
